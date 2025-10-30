@@ -1,73 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vsssssl</title>
   <style>
     body {
-      font-family: Georgia, serif;
-      max-width: 700px;
-      margin: 80px auto;
-      padding: 0 16px;
-      color: #222;
-      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      font-family: "Georgia", serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
     }
-    h1 {
-      font-size: 2.4em;
-      margin-bottom: 0.7em;
-    }
-    nav ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    nav li {
-      display: inline-block;
-      margin-right: 12px;
-    }
-    nav a {
-      color: #333;
-      text-decoration: none;
-      position: relative;
-      padding: 0 4px;
-    }
-    nav a::before {
-      content: '[';
-      position: absolute;
-      left: -4px;
-    }
-    nav a::after {
-      content: ']';
-      position: absolute;
-      right: -4px;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
+
+    /* scrolling whisper title */
     .scroll-container {
+      width: 100%;
       overflow: hidden;
       white-space: nowrap;
-      margin-bottom: 1em;
+      mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     }
+
     .scroll-text {
       display: inline-block;
-      padding-left: 100%;
-      animation: scroll 10s linear infinite;
+      animation: scroll 12s linear infinite;
+      font-size: 8vw;
+      letter-spacing: -0.05em;
+      text-transform: lowercase;
+      color: #111;
+      font-weight: 400;
     }
+
     @keyframes scroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* link area below */
+    nav {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #444;
+      font-size: 1rem;
+      margin: 0 10px;
+    }
+
+    nav a:hover {
+      color: #000;
     }
   </style>
 </head>
 <body>
-  <div class="scroll-container"><div class="scroll-text">vsssssl vsssssl vsssssl vsssssl vsssssl</div></div>
-  <h1>vsssssl</h1>
+  <div class="scroll-container">
+    <div class="scroll-text">vsssssl vsssssl vsssssl vsssssl vsssssl</div>
+  </div>
+
   <nav>
-    <ul>
-      <li><a href="recipes/">recipes</a></li>
-      <li><a href="https://instagram.com/" target="_blank">instagram</a></li>
-      <li><a href="https://twitter.com/" target="_blank">twitter</a></li>
-    </ul>
+    [<a href="recipes/">recipes</a>]
+    [<a href="https://www.instagram.com/vsssssl" target="_blank">instagram</a>]
+    [<a href="mailto:hello@vsssssl.com">email</a>]
   </nav>
 </body>
 </html>
