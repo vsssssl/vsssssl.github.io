@@ -5,74 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vsssssl</title>
   <style>
-    body {
+    /* base */
+    :root {
+      --text: #111;
+      --link: #222;
+    }
+    html, body {
       margin: 0;
-      padding: 0;
       background: #fff;
-      font-family: "Georgia", serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
+      color: var(--text);
+      font-family: Georgia, serif;
     }
 
-    /* scrolling whisper title */
+    /* layout: top-left */
+    .wrapper {
+      padding: 24px 20px;
+      max-width: 1100px;
+    }
+    @media (min-width: 900px) {
+      .wrapper { padding: 28px 32px; }
+    }
+
+    /* whisper title (no gradient; hard cutoff via overflow) */
     .scroll-container {
       width: 100%;
-      overflow: hidden;
+      overflow: hidden;          /* this makes the ends cut off cleanly */
       white-space: nowrap;
-      mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     }
-
     .scroll-text {
       display: inline-block;
-      animation: scroll 12s linear infinite;
-      font-size: 8vw;
-      letter-spacing: -0.05em;
+      white-space: nowrap;
+      font-size: clamp(40px, 10vw, 120px);  /* mobile → desktop */
+      letter-spacing: -0.04em;
       text-transform: lowercase;
-      color: #111;
       font-weight: 400;
+      color: var(--text);
+      animation: scroll 12s linear infinite;
     }
-
     @keyframes scroll {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    /* accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-text { animation-duration: 0.01ms; animation-iteration-count: 1; }
     }
 
-    /* link area below */
+    /* links below (classic bracket style, underline on hover) */
     nav {
-      margin-top: 40px;
-      text-align: center;
+      margin-top: 24px;
+      font-size: clamp(14px, 2.6vw, 16px);
+      line-height: 1.8;
     }
-
     nav a {
+      color: var(--link);
       text-decoration: none;
-      color: #444;
-      font-size: 1rem;
-      margin: 0 10px;
     }
-
     nav a:hover {
-      color: #000;
+      text-decoration: underline; /* revert to earlier hover style */
     }
   </style>
 </head>
 <body>
-  <div class="scroll-container">
-    <div class="scroll-text">vsssssl vsssssl vsssssl vsssssl vsssssl</div>
-  </div>
+  <div class="wrapper">
+    <div class="scroll-container" aria-label="vsssssl">
+      <div class="scroll-text">vsssssl vsssssl vsssssl vsssssl vsssssl vsssssl</div>
+    </div>
 
-  <nav>
-    [<a href="recipes/">recipes</a>]
-    [<a href="https://www.instagram.com/vsssssl" target="_blank">instagram</a>]
-    [<a href="mailto:hello@vsssssl.com">email</a>]
-  </nav>
+    <nav>
+      [<a href="recipes/">recipes</a>]
+      [<a href="https://www.instagram.com/vsssssl" target="_blank" rel="noopener">instagram</a>]
+      [<a href="mailto:hello@vsssssl.com">email</a>]
+    </nav>
+  </div>
 </body>
 </html>
