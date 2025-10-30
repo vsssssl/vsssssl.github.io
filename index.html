@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vsssssl</title>
 
-  <!-- Fraunces italic for title -->
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+  <!-- Fraunces variable (italic + optical size) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400..700&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --text: #111;
       --link: #222;
+      --accent: #c40020; /* red for symbols */
     }
+
     html, body {
       margin: 0;
       background: #fff;
@@ -20,6 +22,7 @@
       font-family: Georgia, serif;
     }
 
+    /* top-left layout */
     .wrapper {
       padding: 24px 20px;
       max-width: 1100px;
@@ -28,16 +31,26 @@
       .wrapper { padding: 28px 32px; }
     }
 
+    /* cluster that keeps title + links the same width */
+    .stack {
+      display: inline-block;        /* shrink to content */
+      max-width: 100%;              /* never overflow on mobile */
+    }
+
     /* scrolling title */
     .scroll-container {
-      width: 100%;
-      overflow: hidden;
+      overflow: hidden;             /* hard white cut-off */
       white-space: nowrap;
+      width: 100%;                  /* JS sets this to match nav width */
     }
     .scroll-text {
       display: inline-block;
       font-family: "Fraunces", serif;
       font-style: italic;
+      /* make it look like the Google preview */
+      font-variation-settings: "opsz" 96, "wght" 400, "ital" 1;
+      font-optical-sizing: auto;
+
       font-size: clamp(42px, 10vw, 120px);
       letter-spacing: -0.04em;
       color: var(--text);
@@ -51,14 +64,15 @@
       .scroll-text { animation-duration: 0.01ms; animation-iteration-count: 1; }
     }
 
-    /* horizontal links with spacing between brackets */
+    /* horizontal links with spacing BETWEEN bracket groups */
     nav {
       margin-top: 28px;
       font-size: clamp(14px, 2.6vw, 16px);
       line-height: 1.8;
       display: flex;
-      flex-wrap: wrap;
-      gap: 33px; /* spacing outside brackets */
+      flex-wrap: wrap;              /* wrap cleanly on mobile */
+      gap: 33px;                    /* space between [group]s */
+      align-items: baseline;
     }
     nav a {
       color: var(--link);
@@ -67,23 +81,42 @@
     nav a:hover {
       text-decoration: underline;
     }
+
+    /* red symbols only */
+    .symbol { color: var(--accent); }
   </style>
 </head>
 
 <body>
   <div class="wrapper">
-    <div class="scroll-container" aria-label="vsssssl">
-      <div class="scroll-text">vsssssl vsssssl vsssssl vsssssl vsssssl vsssssl</div>
-    </div>
+    <div class="stack">
+      <div class="scroll-container" aria-label="vsssssl">
+        <div class="scroll-text">vsssssl vsssssl vsssssl vsssssl vsssssl vsssssl</div>
+      </div>
 
-    <nav>
-      <span>[<a href="recipes/">🜼recipes🜼</a>]</span>
-      <span>[<a href="https://www.twitch.tv/vsssssl" target="_blank" rel="noopener">☕︎internet café (twitch)☕︎</a>]</span>
-      <span>[<a href="https://www.instagram.com/vsssssl" target="_blank" rel="noopener">instagram</a>]</span>
-      <span>[<a href="https://www.youtube.com/@vsssssll" target="_blank" rel="noopener">youtube</a>]</span>
-      <span>[<a href="https://www.tiktok.com/@vsssssll" target="_blank" rel="noopener">tiktok</a>]</span>
-      <span>[<a href="mailto:hello@vsssssl.com">email</a>]</span>
-    </nav>
+      <nav id="site-nav">
+        <span>[<a href="recipes/"><span class="symbol">🜼</span>recipes<span class="symbol">🜼</span></a>]</span>
+        <span>[<a href="https://www.twitch.tv/vsssssl" target="_blank" rel="noopener">☕︎internet café (twitch)☕︎</a>]</span>
+        <span>[<a href="https://www.instagram.com/vsssssl" target="_blank" rel="noopener">instagram</a>]</span>
+        <span>[<a href="https://www.youtube.com/@vsssssll" target="_blank" rel="noopener">youtube</a>]</span>
+        <span>[<a href="https://www.tiktok.com/@vsssssll" target="_blank" rel="noopener">tiktok</a>]</span>
+        <span>[<a href="mailto:hello@vsssssl.com">email</a>]</span>
+      </nav>
+    </div>
   </div>
+
+  <!-- tiny helper: make the scroll width exactly match the nav width -->
+  <script>
+    function syncScrollWidth() {
+      const nav = document.getElementById('site-nav');
+      const sc = document.querySelector('.scroll-container');
+      if (!nav || !sc) return;
+      // measure current nav width (post-wrap) and set scroll width to match
+      const w = Math.ceil(nav.getBoundingClientRect().width);
+      sc.style.width = w + 'px';
+    }
+    window.addEventListener('load', syncScrollWidth);
+    window.addEventListener('resize', syncScrollWidth);
+  </script>
 </body>
 </html>
