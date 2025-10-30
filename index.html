@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vsssssl</title>
 
-  <!-- Fraunces variable (italic + optical size) -->
+  <!-- Fraunces variable (italic + optical size axis) -->
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400..700&display=swap" rel="stylesheet">
 
   <style>
@@ -31,23 +31,25 @@
       .wrapper { padding: 28px 32px; }
     }
 
-    /* cluster that keeps title + links the same width */
+    /* keep title + links as one visual block we can measure */
     .stack {
-      display: inline-block;        /* shrink to content */
-      max-width: 100%;              /* never overflow on mobile */
+      display: inline-block;   /* shrink to content width */
+      max-width: 100%;
     }
 
     /* scrolling title */
     .scroll-container {
-      overflow: hidden;             /* hard white cut-off */
+      overflow: hidden;        /* hard white cut-off at edges */
       white-space: nowrap;
-      width: 100%;                  /* JS sets this to match nav width */
+      display: inline-block;
+      vertical-align: top;
+      width: 100%;             /* JS will set exact px width to match nav */
     }
     .scroll-text {
       display: inline-block;
       font-family: "Fraunces", serif;
       font-style: italic;
-      /* make it look like the Google preview */
+      /* tune to look like the Google Fonts specimen */
       font-variation-settings: "opsz" 96, "wght" 400, "ital" 1;
       font-optical-sizing: auto;
 
@@ -70,8 +72,8 @@
       font-size: clamp(14px, 2.6vw, 16px);
       line-height: 1.8;
       display: flex;
-      flex-wrap: wrap;              /* wrap cleanly on mobile */
-      gap: 33px;                    /* space between [group]s */
+      flex-wrap: wrap;    /* wraps neatly on mobile */
+      gap: 33px;          /* ← spacing outside the brackets */
       align-items: baseline;
     }
     nav a {
@@ -105,15 +107,26 @@
     </div>
   </div>
 
-  <!-- tiny helper: make the scroll width exactly match the nav width -->
+  <!-- make the scroll box width match from the first '[' to the last ']' -->
   <script>
     function syncScrollWidth() {
       const nav = document.getElementById('site-nav');
       const sc = document.querySelector('.scroll-container');
       if (!nav || !sc) return;
-      // measure current nav width (post-wrap) and set scroll width to match
-      const w = Math.ceil(nav.getBoundingClientRect().width);
-      sc.style.width = w + 'px';
+
+      const spans = nav.querySelectorAll('span');
+      if (!spans.length) return;
+
+      // find the left-most and right-most edges across all rows (wrap-safe)
+      let minLeft = Infinity, maxRight = -Infinity;
+      spans.forEach(s => {
+        const r = s.getBoundingClientRect();
+        if (r.left < minLeft) minLeft = r.left;
+        if (r.right > maxRight) maxRight = r.right;
+      });
+
+      const width = Math.ceil(maxRight - minLeft);
+      sc.style.width = width + 'px';
     }
     window.addEventListener('load', syncScrollWidth);
     window.addEventListener('resize', syncScrollWidth);
