@@ -2,52 +2,57 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Recipes</title>
+  <title>vsssssl</title>
   <style>
     body {
       font-family: Georgia, serif;
-      max-width: 600px;
+      max-width: 700px;
       margin: 80px auto;
       padding: 0 16px;
       color: #222;
-      line-height: 1.5;
+      line-height: 1.6;
     }
     h1 {
-      font-size: 2em;
-      margin-bottom: 0.5em;
+      font-size: 2.4em;
+      margin-bottom: 0.7em;
     }
-    ul {
+    nav ul {
       list-style: none;
       padding-left: 0;
     }
-    li {
-      margin-bottom: 0.5em;
+    nav li {
+      display: inline-block;
+      margin-right: 12px;
     }
-    a {
+    nav a {
       color: #333;
       text-decoration: none;
+      position: relative;
+      padding: 0 4px;
     }
-    a:hover {
-      text-decoration: underline;
-    }
-    /* Add square brackets around each link */
-    .back::before, .back::after {
-      content: '';
-    }
-    .nav a::before {
+    nav a::before {
       content: '[';
+      position: absolute;
+      left: -4px;
     }
-    .nav a::after {
+    nav a::after {
       content: ']';
+      position: absolute;
+      right: -4px;
+    }
+    nav a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <h1>Recipes</h1>
-  <p>Browse my recipes below:</p>
-  <ul class="nav">
-    <li><a href="../sticky-date-cake.md">Sticky Date Cake</a></li>
-  </ul>
-  <p class="nav"><a href="/">home</a></p>
+  <h1>vsssssl</h1>
+  <nav>
+    <ul>
+      <li><a href="recipes/">recipes</a></li>
+      <li><a href="https://instagram.com/" target="_blank">instagram</a></li>
+      <li><a href="https://twitter.com/" target="_blank">twitter</a></li>
+    </ul>
+  </nav>
 </body>
 </html>
