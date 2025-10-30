@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Recipes</title>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 0 16px;
+      color: #222;
+      line-height: 1.5;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 0.5em;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      margin-bottom: 0.5em;
+    }
+    a {
+      color: #333;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    /* Add square brackets around each link */
+    .back::before, .back::after {
+      content: '';
+    }
+    .nav a::before {
+      content: '[';
+    }
+    .nav a::after {
+      content: ']';
+    }
+  </style>
+</head>
+<body>
+  <h1>Recipes</h1>
+  <p>Browse my recipes below:</p>
+  <ul class="nav">
+    <li><a href="../sticky-date-cake.md">Sticky Date Cake</a></li>
+  </ul>
+  <p class="nav"><a href="/">home</a></p>
+</body>
+</html>
