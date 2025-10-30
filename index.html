@@ -28,10 +28,10 @@
       .wrapper { padding: 28px 32px; }
     }
 
-    /* whisper title */
+    /* scrolling title */
     .scroll-container {
       width: 100%;
-      overflow: hidden; 
+      overflow: hidden;
       white-space: nowrap;
     }
     .scroll-text {
@@ -51,14 +51,14 @@
       .scroll-text { animation-duration: 0.01ms; animation-iteration-count: 1; }
     }
 
-    /* horizontal links with extra spacing */
+    /* horizontal links with spacing between brackets */
     nav {
       margin-top: 28px;
       font-size: clamp(14px, 2.6vw, 16px);
       line-height: 1.8;
       display: flex;
       flex-wrap: wrap;
-      gap: 22px; /* space between links */
+      gap: 40px; /* spacing outside brackets */
     }
     nav a {
       color: var(--link);
@@ -73,16 +73,16 @@
 <body>
   <div class="wrapper">
     <div class="scroll-container" aria-label="vsssssl">
-      <div class="scroll-text">vssssslvssssslvssssslvssssslvssssslvsssssl</div>
+      <div class="scroll-text">vsssssl vsssssl vsssssl vsssssl vsssssl vsssssl</div>
     </div>
 
     <nav>
-      [<a href="recipes/">🜼recipes🜼</a>]
-      [<a href="https://www.twitch.tv/vsssssl" target="_blank" rel="noopener">☕︎internet café (twitch)☕︎</a>]
-      [<a href="https://www.instagram.com/vsssssl" target="_blank" rel="noopener">instagram</a>]
-      [<a href="https://www.youtube.com/@vsssssll" target="_blank" rel="noopener">youtube</a>]
-      [<a href="https://www.tiktok.com/@vsssssll" target="_blank" rel="noopener">tiktok</a>]
-      [<a href="mailto:hello@vsssssl.com">email</a>]
+      <span>[<a href="recipes/">🜼recipes🜼</a>]</span>
+      <span>[<a href="https://www.twitch.tv/vsssssl" target="_blank" rel="noopener">☕︎internet café (twitch)☕︎</a>]</span>
+      <span>[<a href="https://www.instagram.com/vsssssl" target="_blank" rel="noopener">instagram</a>]</span>
+      <span>[<a href="https://www.youtube.com/@vsssssll" target="_blank" rel="noopener">youtube</a>]</span>
+      <span>[<a href="https://www.tiktok.com/@vsssssll" target="_blank" rel="noopener">tiktok</a>]</span>
+      <span>[<a href="mailto:hello@vsssssl.com">email</a>]</span>
     </nav>
   </div>
 </body>
