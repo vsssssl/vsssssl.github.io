@@ -9,91 +9,108 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400..700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --text: #111;
-      --link: #222;
-      --accent: #c40020; /* red for symbols */
+    :root{
+      --text:#111;
+      --link:#222;
+      --accent:#c40020;        /* red for symbols */
+      --gap:33px;              /* space between [groups] */
+      --title-crop:0.84;       /* how much of the title height to show (0.80–0.92) */
     }
 
-    html, body {
-      margin: 0;
-      background: #fff;
-      color: var(--text);
-      font-family: Georgia, serif;
+    html,body{
+      margin:0;
+      background:#fff;
+      color:var(--text);
+      font-family:Georgia,serif;
     }
 
-    /* top-left layout */
-    .wrapper {
-      padding: 24px 20px;
-      max-width: 1100px;
+    /* top-left layout — tightened */
+    .wrapper{
+      padding:14px 16px;       /* was ~24px; pulled up */
+      max-width:1100px;
     }
-    @media (min-width: 900px) {
-      .wrapper { padding: 28px 32px; }
-    }
-
-    /* keep title + links as one visual block we can measure */
-    .stack {
-      display: inline-block;   /* shrink to content width */
-      max-width: 100%;
+    @media (min-width:900px){
+      .wrapper{ padding:16px 22px; }
     }
 
-    /* scrolling title */
-    .scroll-container {
-      overflow: hidden;        /* hard white cut-off at edges */
-      white-space: nowrap;
-      display: inline-block;
-      vertical-align: top;
-      width: 100%;             /* JS will set exact px width to match nav */
-    }
-    .scroll-text {
-      display: inline-block;
-      font-family: "Fraunces", serif;
-      font-style: italic;
-      /* tune to look like the Google Fonts specimen */
-      font-variation-settings: "opsz" 96, "wght" 400, "ital" 1;
-      font-optical-sizing: auto;
-
-      font-size: clamp(42px, 10vw, 120px);
-      letter-spacing: -0.04em;
-      color: var(--text);
-      animation: scroll 12s linear infinite;
-    }
-    @keyframes scroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .scroll-text { animation-duration: 0.01ms; animation-iteration-count: 1; }
+    /* keep title + links as one measured block */
+    .stack{
+      display:inline-block;
+      max-width:100%;
     }
 
-    /* horizontal links with spacing BETWEEN bracket groups */
-    nav {
-      margin-top: 28px;
-      font-size: clamp(14px, 2.6vw, 16px);
-      line-height: 1.8;
-      display: flex;
-      flex-wrap: wrap;    /* wraps neatly on mobile */
-      gap: 33px;          /* ← spacing outside the brackets */
-      align-items: baseline;
+    /* title crop: hard top/bottom crop via height + overflow */
+    .title-crop{
+      display:inline-block;
+      font-size:clamp(42px,10vw,120px); /* title size */
+      line-height:1;
+      height:calc(1em * var(--title-crop)); /* visible slice */
+      overflow:hidden;                      /* hard crop */
     }
-    nav a {
-      color: var(--link);
-      text-decoration: none;
+
+    /* horizontal scroll area (width matched to nav via JS) */
+    .scroll-container{
+      overflow:hidden;
+      white-space:nowrap;
+      display:inline-block;
+      vertical-align:top;
+      width:100%; /* JS sets exact px */
     }
-    nav a:hover {
-      text-decoration: underline;
+
+    /* gentle vertical nudge of the scroll content so crop feels even */
+    .scroll-inner{
+      transform:translateY(-0.06em);
     }
+
+    .scroll-text{
+      display:inline-block;
+      font-family:"Fraunces",serif;
+      font-style:italic;
+      font-variation-settings:"opsz" 96,"wght" 400,"ital" 1;
+      font-optical-sizing:auto;
+
+      letter-spacing:-0.04em;
+      color:var(--text);
+      animation:scroll 12s linear infinite;
+    }
+    @keyframes scroll{
+      0%{ transform:translateX(0); }
+      100%{ transform:translateX(-50%); }
+    }
+    @media (prefers-reduced-motion:reduce){
+      .scroll-text{ animation-duration:0.01ms; animation-iteration-count:1; }
+    }
+
+    /* links: tighter top spacing, horizontal, wrap on mobile, spacing between [groups] */
+    nav{
+      margin-top:12px;           /* was 28px; tighter */
+      font-size:clamp(14px,2.6vw,16px);
+      line-height:1.8;
+      display:flex;
+      flex-wrap:wrap;
+      gap:var(--gap);
+      align-items:baseline;
+    }
+    nav a{
+      color:var(--link);
+      text-decoration:none;
+    }
+    nav a:hover{ text-decoration:underline; }
 
     /* red symbols only */
-    .symbol { color: var(--accent); }
+    .symbol{ color:var(--accent); }
   </style>
 </head>
 
 <body>
   <div class="wrapper">
     <div class="stack">
-      <div class="scroll-container" aria-label="vsssssl">
-        <div class="scroll-text">vsssssl vsssssl vsssssl vsssssl vsssssl vsssssl</div>
+      <div class="title-crop">
+        <div class="scroll-container" aria-label="vsssssl">
+          <div class="scroll-inner">
+            <div class="scroll-text">vsssssl vsssssl vsssssl vsssssl vsssssl vsssssl</div>
+          </div>
+        </div>
       </div>
 
       <nav id="site-nav">
@@ -107,29 +124,28 @@
     </div>
   </div>
 
-  <!-- make the scroll box width match from the first '[' to the last ']' -->
+  <!-- match scroll width from first '[' to last ']' (wrap-safe) -->
   <script>
-    function syncScrollWidth() {
+    function syncScrollWidth(){
       const nav = document.getElementById('site-nav');
-      const sc = document.querySelector('.scroll-container');
-      if (!nav || !sc) return;
+      const sc  = document.querySelector('.scroll-container');
+      if(!nav || !sc) return;
 
       const spans = nav.querySelectorAll('span');
-      if (!spans.length) return;
+      if(!spans.length) return;
 
-      // find the left-most and right-most edges across all rows (wrap-safe)
       let minLeft = Infinity, maxRight = -Infinity;
-      spans.forEach(s => {
+      spans.forEach(s=>{
         const r = s.getBoundingClientRect();
-        if (r.left < minLeft) minLeft = r.left;
-        if (r.right > maxRight) maxRight = r.right;
+        if(r.left  < minLeft) minLeft = r.left;
+        if(r.right > maxRight) maxRight = r.right;
       });
 
       const width = Math.ceil(maxRight - minLeft);
       sc.style.width = width + 'px';
     }
-    window.addEventListener('load', syncScrollWidth);
-    window.addEventListener('resize', syncScrollWidth);
+    window.addEventListener('load',  syncScrollWidth);
+    window.addEventListener('resize',syncScrollWidth);
   </script>
 </body>
 </html>
